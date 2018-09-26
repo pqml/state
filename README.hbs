@@ -1,5 +1,8 @@
-# Maths utilities
-[:books: **Documentation**](#api)  |  [:globe_with_meridians: **Internet modules**](https://www.npmjs.com/org/internet)
+# State
+[:books: **Documentation**](#api)  |  [:bar_chart: **Benchmarks**](https://pqml.github.io/state)  |  [:globe_with_meridians: **Internet modules**](https://www.npmjs.com/org/internet)
+
+- Create tiny signal-based stores
+- `Signal` class to create your own signals
 
 <br>
 
@@ -16,10 +19,10 @@
 
 ```sh
 # using npm
-$ npm install --save @internet/maths
+$ npm install --save @internet/state
 
 # or using yarn
-$ yarn add @internet/maths
+$ yarn add @internet/state
 ```
 
 <br>
@@ -27,11 +30,41 @@ $ yarn add @internet/maths
 <a name="api"></a>
 # API
 
-<a name="module_maths"></a>
-{{#module name="maths"}}
+```js
+import { createStore, Signal } from '@internet/state'
+```
+
+- [:mailbox_with_mail: **createStore**](#createStore): _Create a new store: a collection of [StoreSignal](#StoreSignal) instances_
+- [:satellite: **Signal**](#Signal): _Signal class_
+
+<br>
+
+<a name="createStore"></a>
+## :mailbox_with_mail: createStore()
+{{#globals name="createStore"}}
+{{>body~}}
+{{/globals}}
+
+<br>
+
+<a name="StoreSignal"></a>
+## :mailbox_with_mail: StoreSignal
+{{#globals name="StoreSignal"}}
 {{>body~}}
 #### API
 {{>member-index~}}
 <br>
 {{>members~}}
-{{/module}}
+{{/globals}}
+
+<br>
+
+<a name="Signal"></a>
+## :satellite: Signal
+{{#globals name="Signal"}}
+{{>body~}}
+#### API
+{{>member-index~}}
+<br>
+{{>members~}}
+{{/globals}}
