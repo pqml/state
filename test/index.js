@@ -1,7 +1,6 @@
 import 'raf/polyfill'
 import test from 'tape-promise/tape'
 import { createStore, Signal } from '../lib'
-import { wait } from './utils'
 
 test('createStore', async t => {
   const store = createStore({
@@ -20,7 +19,7 @@ test('Signal', async t => {
 
   let calls = 0
   let str = null
-  function listener () { calls++; str = Array.from(arguments).reduce((p, c) => p += c ? c : '', '') }
+  function listener () { calls++; str = Array.from(arguments).reduce((p, c) => c ? p + c : p, '') }
 
   s.listen(listener)
   s.dispatch('a', 'b', 'c')
@@ -43,14 +42,16 @@ test('Signal', async t => {
   t.ok(calls === 1, 'listenOnce() is only called one time')
   t.ok(!binding.owner && !binding.fn, 'Signal listener .owner and .fn are disposed after unlistening')
 
-
   class L {
     constructor () { this.binding = s.listen(this.listener) }
     listener () { calls++ }
     dispose () { s.unlisten(this.binding) }
     dumbDispose () { s.unlisten(this.listener) }
   }
-  const a = new L(); const b = new L(); const c = new L();
+
+  const a = new L()
+  const b = new L()
+  const c = new L() // eslint-disable-line
 
   calls = 0
   b.dispose()
@@ -62,13 +63,16 @@ test('Signal', async t => {
   s.dispatch()
   t.ok(calls === 0, `Unlisten all listeners methods of a class when context is not used`)
 
-
   class L2 {
     constructor (char) { s.listen(this.listener, this); this.char = char }
     listener () { calls++; str += this.char }
     dispose () { s.unlisten(this.listener, this) }
   }
-  const e = new L2('e'); const f = new L2('f'); const g = new L2('g'); const h = new L2('h');
+  const e = new L2('e')
+  const f = new L2('f') // eslint-disable-line
+  const g = new L2('g')
+  const h = new L2('h')
+
   str = ''
   calls = 0
   g.dispose()
@@ -77,7 +81,7 @@ test('Signal', async t => {
   t.ok(str === 'efh', `Conserve good function order after dispose`)
 
   h.dispose()
-  const i = new L2('i');
+  const i = new L2('i') // eslint-disable-line
   e.dispose()
   calls = 0
   str = ''
@@ -92,7 +96,6 @@ test('Signal', async t => {
 
   t.end()
 })
-
 
 test('StoreSignal', async t => {
   const { a } = createStore({ a: 0 })
