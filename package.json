@@ -1,6 +1,6 @@
 {
   "name": "@internet/state",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Simple signal-based state management",
   "source": "lib/index.js",
   "main": "lib/index.js",
